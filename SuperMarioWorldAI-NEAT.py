@@ -7,8 +7,6 @@ import pickle
 
 # Play this retro game at this level.DonutPlains1
 env = retro.make('SuperMarioWorld-Snes', 'YoshiIsland1.state')
-checkpoint_file = 'neat-checkpoint-741'  # Substitua X pelo número do checkpoint desejado
-p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 imgarray = []
 
 def eval_genomes(genomes, config):
