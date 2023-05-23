@@ -5,8 +5,9 @@ import cv2
 import neat
 import pickle
 
-# Play this retro game at this level.DonutPlains1
+# Play this retro game at this level.
 env = retro.make('SuperMarioWorld-Snes', 'YoshiIsland1.state')
+
 imgarray = []
 
 def eval_genomes(genomes, config):
@@ -148,7 +149,7 @@ def eval_genomes(genomes, config):
 
             # If mario dies, dead becomes 0, so when it is 0, penalize him and move on.
             if dead == 0:
-                fitness_current -= 2000
+                fitness_current -= 100
                 done = True 
 
             if done == True:
@@ -156,9 +157,9 @@ def eval_genomes(genomes, config):
 
             genome.fitness = fitness_current
             
-#config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-#                     neat.DefaultSpeciesSet, neat.DefaultStagnation, 
-#                     'config-feedforward')
+config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                     neat.DefaultSpeciesSet, neat.DefaultStagnation, 
+                     'config-feedforward')
 
 #p = neat.Population(config)
 checkpoint_file = 'neat-checkpoint-823'  # Substitua X pelo número do checkpoint desejado
