@@ -162,7 +162,7 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      'config-feedforward')
 
 #p = neat.Population(config)
-checkpoint_file = 'neat-checkpoint-823'  # Substitua X pelo número do checkpoint desejado
+checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
 p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
 p.add_reporter(neat.StdOutReporter(True))
