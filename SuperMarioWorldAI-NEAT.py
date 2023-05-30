@@ -6,7 +6,7 @@ import neat
 import pickle
 
 # Play this retro game at this level.
-env = retro.make('SuperMarioWorld-Snes', 'YoshiIsland1.state')
+env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
 
 imgarray = []
 
@@ -161,9 +161,9 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation, 
                      'config-feedforward')
 
-#p = neat.Population(config)
-checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
-p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
+p = neat.Population(config)
+#checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
+#p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
 p.add_reporter(neat.StdOutReporter(True))
 stats = neat.StatisticsReporter()
