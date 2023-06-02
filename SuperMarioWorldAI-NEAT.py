@@ -6,7 +6,7 @@ import neat
 import pickle
 
 # Play this retro game at this level.
-env = retro.make('SuperMarioWorld-Snes', 'YoshiIsland1.state')
+env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
 
 imgarray = []
 
@@ -92,7 +92,7 @@ def eval_genomes(genomes, config):
             if xPos > xPosPrevious:
                 if jump > 0:
                     fitness_current += 10
-                fitness_current += (xPos / 100)
+                fitness_current += (xPos / 50)
                 xPosPrevious = xPos
                 counter = 0
             # If mario is standing still or going backwards, penalize him slightly.
@@ -108,19 +108,19 @@ def eval_genomes(genomes, config):
                 yPosPrevious = yPos
 
             # If mario loses a powerup, punish him 1000 points.
-            if powerUps == 0:
+            if False: #if powerUps == 0:
                 if powerUpsLast == 1:
                     fitness_current -= 500
                     print("Lost Upgrade")
             # If powerups is 1, mario got a mushroom...reward him for keeping it.
-            elif powerUps == 1:
+            elif False: #elif powerUps == 1:
                 if powerUpsLast == 1 or powerUpsLast == 0:
                     fitness_current += 0.025       
                 elif powerUpsLast == 2: 
                     fitness_current -= 500
                     print("Lost Upgrade")
             # If powerups is 2, mario got a cape feather...reward him for keeping it.
-            elif powerUps == 2:
+            elif False: #elif powerUps == 2:
                 fitness_current += 0.05
                 
             powerUpsLast = powerUps
@@ -143,13 +143,13 @@ def eval_genomes(genomes, config):
                 done = True
 
             # If mario is standing still or going backwards for 1000 frames, end his try.
-            if counter == 1000:
-                fitness_current -= 125
+            if counter == 500:
+                fitness_current -= 5000
                 done = True                
 
             # If mario dies, dead becomes 0, so when it is 0, penalize him and move on.
             if dead == 0:
-                fitness_current -= 100
+                fitness_current -= 1000
                 done = True 
 
             if done == True:
@@ -161,9 +161,9 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation, 
                      'config-feedforward')
 
-#p = neat.Population(config)
-checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
-p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
+p = neat.Population(config)
+#checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
+#p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
 p.add_reporter(neat.StdOutReporter(True))
 stats = neat.StatisticsReporter()
