@@ -149,7 +149,7 @@ def eval_genomes(genomes, config):
 
             # If mario dies, dead becomes 0, so when it is 0, penalize him and move on.
             if dead == 0:
-                fitness_current -= 100
+                fitness_current -= 1000
                 done = True 
 
             if done == True:
@@ -161,9 +161,9 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation, 
                      'config-feedforward')
 
-p = neat.Population(config)
-#checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
-#p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
+#p = neat.Population(config)
+checkpoint_file = 'neat-checkpoint-92'  # Substitua X pelo número do checkpoint desejado
+p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
 p.add_reporter(neat.StdOutReporter(True))
 stats = neat.StatisticsReporter()
