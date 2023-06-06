@@ -111,14 +111,14 @@ def eval_genomes(genomes, config):
             if powerUps == 0:
                 if powerUpsLast == 1:
                     fitness_current -= 500
-                    print("Lost Upgrade")
+                    #print("Lost Upgrade")
             # If powerups is 1, mario got a mushroom...reward him for keeping it.
             elif powerUps == 1:
                 if powerUpsLast == 1 or powerUpsLast == 0:
                     fitness_current += 0.025       
                 elif powerUpsLast == 2: 
                     fitness_current -= 500
-                    print("Lost Upgrade")
+                    #print("Lost Upgrade")
             # If powerups is 2, mario got a cape feather...reward him for keeping it.
             elif powerUps == 2:
                 fitness_current += 0.05
@@ -143,7 +143,7 @@ def eval_genomes(genomes, config):
                 done = True
 
             # If mario is standing still or going backwards for 1000 frames, end his try.
-            if counter == 1000:
+            if counter == 500:
                 fitness_current -= 125
                 done = True                
 
@@ -162,7 +162,7 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      'config-feedforward')
 
 #p = neat.Population(config)
-checkpoint_file = 'neat-checkpoint-92'  # Substitua X pelo número do checkpoint desejado
+checkpoint_file = 'neat-checkpoint-114'  # Substitua X pelo número do checkpoint desejado
 p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
 p.add_reporter(neat.StdOutReporter(True))
