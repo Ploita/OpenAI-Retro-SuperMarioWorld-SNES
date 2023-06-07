@@ -4,29 +4,34 @@ import numpy as np
 import cv2
 import neat
 import pickle
+from utils import *
+from rominfo import *
 
 # Play this retro game at this level.
-env = retro.make('SuperMarioWorld-Snes', 'YoshiIsland1.state')
+env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
 
 imgarray = []
+
+def step(x):
+    vec = []
+    for i in x:
+        if i > 0.5:
+            vec.append(1)
+        else:
+            vec.append(0)
+    return vec
+
 
 def eval_genomes(genomes, config):
     
     for genome_id, genome in genomes:
-        ob = env.reset()
-        ac = env.action_space.sample() # action with generic sample
-
-        iny, inx, inc = env.observation_space.shape
-
-        inx = int(inx/8)
-        iny = int(iny/8)
-
+        
+        
         # Create a Recurrent Neural Network.
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
 
-        current_max_fitness = 0
+
         fitness_current = 0
-        frame = 0
         counter = 0
         score = 0
         scoreTracker = 0
@@ -44,20 +49,15 @@ def eval_genomes(genomes, config):
         jump = 0
 
         done = False
-
+        env.reset()
         while not done:
             env.render()
-            frame += 1
 
-            ob = cv2.resize(ob, (inx, iny))
-            ob = cv2.cvtColor(ob, cv2.COLOR_BGR2GRAY)
-            ob = np.reshape(ob, (inx, iny))
+            estado, _, _ = getInputs(getRam(env), 6)
 
-            imgarray = ob.flatten()
-
-            nnOutput = net.activate(imgarray)   
+            nnOutput = net.activate(estado)   
             
-            ob, rew, done, info = env.step(nnOutput)        
+            _, _, done, info = env.step(step(nnOutput))        
 
             score = info['score']
             coins = info['coins']
@@ -162,7 +162,7 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      'config-feedforward')
 
 #p = neat.Population(config)
-checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
+checkpoint_file = 'neat-checkpoint-28'  # Substitua X pelo número do checkpoint desejado
 p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
 p.add_reporter(neat.StdOutReporter(True))
