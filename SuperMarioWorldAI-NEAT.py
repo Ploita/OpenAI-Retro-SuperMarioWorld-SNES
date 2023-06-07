@@ -10,22 +10,6 @@ from rominfo import *
 # Play this retro game at this level.
 env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
 
-def emula(acoes, env, mostrar):
-
-    env.reset()
-
-    while len(acoes)>0 and (not env.data.is_done()):
-        a = acoes.pop(0)
-        estado, xn, y = getState(getRam(env), 6)
-        performAction(a, env)
-        if mostrar:
-            env.render()
-    over = False
-    estado, x, y = getState(getRam(env), 6)
-    if env.data.is_done() or y > 400:
-        over = True
-    return estado, over
-
 def step(x):
     vec = []
     for i in x:
@@ -43,7 +27,6 @@ def eval_genomes(genomes, config):
 
         # Create a Recurrent Neural Network.
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
-
 
         fitness_current = 0
         counter = 0
