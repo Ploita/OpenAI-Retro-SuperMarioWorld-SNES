@@ -39,13 +39,8 @@ def step(x):
 def eval_genomes(genomes, config):
     
     for genome_id, genome in genomes:
-<<<<<<< Updated upstream
-        
-        
-=======
         env.reset()
 
->>>>>>> Stashed changes
         # Create a Recurrent Neural Network.
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
 
@@ -72,19 +67,11 @@ def eval_genomes(genomes, config):
         while not done:
             env.render()
 
-<<<<<<< Updated upstream
             estado, _, _ = getInputs(getRam(env), 6)
 
             nnOutput = net.activate(estado)   
             
             _, _, done, info = env.step(step(nnOutput))        
-=======
-            estado, _, _ = getInputs(getRam(env), 6) 
-
-            nnOutput = net.activate(estado)   
-            
-            _, _, done, info = env.step(nnOutput)        
->>>>>>> Stashed changes
 
             score = info['score']
             coins = info['coins']
@@ -184,19 +171,13 @@ def eval_genomes(genomes, config):
 
             genome.fitness = fitness_current
             
-config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                     neat.DefaultSpeciesSet, neat.DefaultStagnation, 
-                     'config-feedforward')
+#config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+#                     neat.DefaultSpeciesSet, neat.DefaultStagnation, 
+#                     'config-feedforward')
 
-<<<<<<< Updated upstream
 #p = neat.Population(config)
 checkpoint_file = 'neat-checkpoint-28'  # Substitua X pelo número do checkpoint desejado
 p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
-=======
-p = neat.Population(config)
-#checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
-#p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
->>>>>>> Stashed changes
 
 p.add_reporter(neat.StdOutReporter(True))
 stats = neat.StatisticsReporter()
