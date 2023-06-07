@@ -10,7 +10,21 @@ from rominfo import *
 # Play this retro game at this level.
 env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
 
-imgarray = []
+def emula(acoes, env, mostrar):
+
+    env.reset()
+
+    while len(acoes)>0 and (not env.data.is_done()):
+        a = acoes.pop(0)
+        estado, xn, y = getState(getRam(env), 6)
+        performAction(a, env)
+        if mostrar:
+            env.render()
+    over = False
+    estado, x, y = getState(getRam(env), 6)
+    if env.data.is_done() or y > 400:
+        over = True
+    return estado, over
 
 def step(x):
     vec = []
@@ -25,8 +39,13 @@ def step(x):
 def eval_genomes(genomes, config):
     
     for genome_id, genome in genomes:
+<<<<<<< Updated upstream
         
         
+=======
+        env.reset()
+
+>>>>>>> Stashed changes
         # Create a Recurrent Neural Network.
         net = neat.nn.recurrent.RecurrentNetwork.create(genome, config)
 
@@ -53,11 +72,19 @@ def eval_genomes(genomes, config):
         while not done:
             env.render()
 
+<<<<<<< Updated upstream
             estado, _, _ = getInputs(getRam(env), 6)
 
             nnOutput = net.activate(estado)   
             
             _, _, done, info = env.step(step(nnOutput))        
+=======
+            estado, _, _ = getInputs(getRam(env), 6) 
+
+            nnOutput = net.activate(estado)   
+            
+            _, _, done, info = env.step(nnOutput)        
+>>>>>>> Stashed changes
 
             score = info['score']
             coins = info['coins']
@@ -161,9 +188,15 @@ config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                      neat.DefaultSpeciesSet, neat.DefaultStagnation, 
                      'config-feedforward')
 
+<<<<<<< Updated upstream
 #p = neat.Population(config)
 checkpoint_file = 'neat-checkpoint-28'  # Substitua X pelo número do checkpoint desejado
 p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
+=======
+p = neat.Population(config)
+#checkpoint_file = 'neat-checkpoint-1257'  # Substitua X pelo número do checkpoint desejado
+#p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
+>>>>>>> Stashed changes
 
 p.add_reporter(neat.StdOutReporter(True))
 stats = neat.StatisticsReporter()
