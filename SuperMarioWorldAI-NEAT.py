@@ -8,7 +8,7 @@ from utils import *
 from rominfo import *
 
 # Play this retro game at this level.
-env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
+env = retro.make('SuperMarioWorld-Snes', 'DonutPlains2.state')
 
 def step(x):
     vec = []
