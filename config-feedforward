@@ -1,11 +1,7 @@
 [NEAT]
 fitness_criterion     = max
 fitness_threshold     = 100000
-<<<<<<< Updated upstream
 pop_size              = 100
-=======
-pop_size              = 10
->>>>>>> Stashed changes
 reset_on_extinction   = False
 
 [DefaultGenome]
@@ -17,13 +13,8 @@ activation_options      = sigmoid gauss
 
 # node aggregation options
 aggregation_default     = random
-<<<<<<< Updated upstream
 aggregation_mutate_rate = 0.4
 aggregation_options     = sum product min max mean median maxabs
-=======
-aggregation_mutate_rate = 0.3
-aggregation_options     = sum min max mean median maxabs
->>>>>>> Stashed changes
 
 # node bias options
 bias_init_mean          = 0.05

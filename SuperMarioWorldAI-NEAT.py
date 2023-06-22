@@ -8,7 +8,7 @@ from utils import *
 from rominfo import *
 
 # Play this retro game at this level.
-env = retro.make('SuperMarioWorld-Snes', 'DonutPlains1.state')
+env = retro.make('SuperMarioWorld-Snes', 'YoshiIsland1.state')
 
 def step(x):
     vec = []
@@ -19,6 +19,19 @@ def step(x):
             vec.append(0)
     return vec
 
+def replay_genome(config_path, genome_path="winner.pkl"):
+    # Load requried NEAT config
+    config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
+
+    # Unpickle saved winner
+    with open(genome_path, "rb") as f:
+        genome = pickle.load(f)
+
+    # Convert loaded genome into required data structure
+    genomes = [(1, genome)]
+
+    # Call game with only the loaded genome
+    eval_genomes(genomes, config)
 
 def eval_genomes(genomes, config):
     
@@ -154,22 +167,26 @@ def eval_genomes(genomes, config):
 
             genome.fitness = fitness_current
             
+## Inicia a população
 #config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
 #                     neat.DefaultSpeciesSet, neat.DefaultStagnation, 
 #                     'config-feedforward')
-
 #p = neat.Population(config)
-checkpoint_file = 'neat-checkpoint-28'  # Substitua X pelo número do checkpoint desejado
-p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
-p.add_reporter(neat.StdOutReporter(True))
-stats = neat.StatisticsReporter()
-p.add_reporter(stats)
-p.add_reporter(neat.Checkpointer(10))
+## Caso tenha que parar e continuar o treinamento
+#checkpoint_file = 'neat-checkpoint-28'  # Substitua X pelo número do checkpoint desejado
+#p = neat.Checkpointer.restore_checkpoint(checkpoint_file)
 
-winner = p.run(eval_genomes)
+## Não alterar, estatísticas 
+#p.add_reporter(neat.StdOutReporter(True))
+#stats = neat.StatisticsReporter()
+#p.add_reporter(stats)
+#p.add_reporter(neat.Checkpointer(10))
 
-with open('winner.pkl', 'wb') as output:
-    pickle.dump(winner, output, 1)
 
-    
+#winner = p.run(eval_genomes)
+
+#with open('winner.pkl', 'wb') as output:
+#    pickle.dump(winner, output, 1)
+
+replay_genome('config-feedforward')
